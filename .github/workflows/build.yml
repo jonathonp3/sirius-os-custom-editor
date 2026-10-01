@@ -1,0 +1,70 @@
+name: Build and Release Custom Editor
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  flatpak:
+    name: "Build and Release"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install rsync on host
+      run: sudo apt update && sudo apt install -y rsync    
+
+    - name: Flatpak Build Environment
+      uses: addnab/docker-run-action@v3
+      with:
+        image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-47
+        options: -v ${{ github.workspace }}:/workspace --privileged   
+        run: |
+          cd /workspace
+          
+          # 1. Import GPG Key (Using --batch and --import correctly)
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+
+          # 2. Setup Runtimes
+          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.gnome.Sdk//50 org.gnome.Platform//50
+          
+          # 3. Inject Themes
+          python3 update_manifest.py
+          
+          # 4. Build and SIGN (Check for success)
+          flatpak-builder --user --disable-rofiles-fuse \
+            --repo=deploy-repo \
+            --gpg-sign=EF66A791A288334155EE9BC63101D7D21F19C0E2  \
+            --force-clean build-dir-stable org.gnome.TextEditor.json || exit 1
+          
+          # 5. Sign the repository metadata
+          flatpak build-update-repo --gpg-sign=EF66A791A288334155EE9BC63101D7D21F19C0E2 deploy-repo
+          
+          # 6. Create the bundle
+          flatpak build-bundle deploy-repo gnome-text-editor-stable.flatpak org.gnome.TextEditor stable
+
+          # 7. Final Check & Permissions
+          ls -R deploy-repo
+          chmod -R 777 /workspace/deploy-repo
+          chmod 666 /workspace/gnome-text-editor-stable.flatpak
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: latest-build
+        name: "Sirius-OS Custom Editor - Latest"
+        files: gnome-text-editor-stable.flatpak
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: deploy-repo
+        branch: gh-pages
+

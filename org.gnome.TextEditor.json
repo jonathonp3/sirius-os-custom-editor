@@ -1,0 +1,222 @@
+{
+  "app-id": "org.gnome.TextEditor",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "50",
+  "sdk": "org.gnome.Sdk",
+  "command": "gnome-text-editor",
+  "branch": "stable",
+  "finish-args": [
+    "--device=dri",
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--talk-name=org.freedesktop.FileManager1",
+    "--filesystem=host",
+    "--filesystem=xdg-run/gvfs",
+    "--filesystem=xdg-run/gvfsd",
+    "--talk-name=org.gtk.vfs.*",
+    "--env=GTK_SOURCE_STYLE_SCHEME=solarized-light-cosmic-latte"
+  ],
+  "cleanup": [
+    "/include",
+    "/lib/girepository-1.0",
+    "/lib/pkgconfig",
+    "/man",
+    "/share/aclocal",
+    "/share/doc",
+    "/share/gir-1.0",
+    "/share/gtk-doc",
+    "/share/man",
+    "/share/pkgconfig",
+    "*.la",
+    "*.a"
+  ],
+  "modules": [
+    {
+      "name": "custom-gtksource-styles",
+      "buildsystem": "simple",
+      "build-commands": [
+        "mkdir -p /app/share/gtksourceview-5/styles",
+        "install -Dm644 themes/andromeda-deep-space-high-contrast.xml /app/share/gtksourceview-5/styles/andromeda-deep-space-high-contrast.xml",
+        "install -Dm644 themes/andromeda-deep-space.xml /app/share/gtksourceview-5/styles/andromeda-deep-space.xml",
+        "install -Dm644 themes/ant-clean-light.xml /app/share/gtksourceview-5/styles/ant-clean-light.xml",
+        "install -Dm644 themes/deep-oceanic-navy.xml /app/share/gtksourceview-5/styles/deep-oceanic-navy.xml",
+        "install -Dm644 themes/dracula-official-high-contrast.xml /app/share/gtksourceview-5/styles/dracula-official-high-contrast.xml",
+        "install -Dm644 themes/dracula-official.xml /app/share/gtksourceview-5/styles/dracula-official.xml",
+        "install -Dm644 themes/kimi-dark-modern-high-contrast.xml /app/share/gtksourceview-5/styles/kimi-dark-modern-high-contrast.xml",
+        "install -Dm644 themes/kimi-dark-modern-muted.xml /app/share/gtksourceview-5/styles/kimi-dark-modern-muted.xml",
+        "install -Dm644 themes/kimi-dark-modern-soft.xml /app/share/gtksourceview-5/styles/kimi-dark-modern-soft.xml",
+        "install -Dm644 themes/kimi-dark-modern.xml /app/share/gtksourceview-5/styles/kimi-dark-modern.xml",
+        "install -Dm644 themes/nord-light-arctic.xml /app/share/gtksourceview-5/styles/nord-light-arctic.xml",
+        "install -Dm644 themes/solarized-light-champagne.xml /app/share/gtksourceview-5/styles/solarized-light-champagne.xml",
+        "install -Dm644 themes/solarized-light-cosmic-latte.xml /app/share/gtksourceview-5/styles/solarized-light-cosmic-latte.xml",
+        "install -Dm644 themes/solarized-light-extra-warm.xml /app/share/gtksourceview-5/styles/solarized-light-extra-warm.xml",
+        "install -Dm644 themes/solarized-light-golden-parchment.xml /app/share/gtksourceview-5/styles/solarized-light-golden-parchment.xml",
+        "install -Dm644 themes/solarized-light-golden-sand.xml /app/share/gtksourceview-5/styles/solarized-light-golden-sand.xml",
+        "install -Dm644 themes/solarized-light-lavender-blush.xml /app/share/gtksourceview-5/styles/solarized-light-lavender-blush.xml",
+        "install -Dm644 themes/solarized-light-light-gold.xml /app/share/gtksourceview-5/styles/solarized-light-light-gold.xml",
+        "install -Dm644 themes/solarized-light-muted-canvas.xml /app/share/gtksourceview-5/styles/solarized-light-muted-canvas.xml",
+        "install -Dm644 themes/space-kde-slate-high-contrast.xml /app/share/gtksourceview-5/styles/space-kde-slate-high-contrast.xml",
+        "install -Dm644 themes/space-kde-slate-soft-high-contrast.xml /app/share/gtksourceview-5/styles/space-kde-slate-soft-high-contrast.xml",
+        "install -Dm644 themes/space-kde-slate.xml /app/share/gtksourceview-5/styles/space-kde-slate.xml",
+        "install -Dm644 themes/sweet-neon-synthwave-high-contrast-red.xml /app/share/gtksourceview-5/styles/sweet-neon-synthwave-high-contrast-red.xml",
+        "install -Dm644 themes/sweet-neon-synthwave.xml /app/share/gtksourceview-5/styles/sweet-neon-synthwave.xml"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "themes/andromeda-deep-space-high-contrast.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/andromeda-deep-space.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/ant-clean-light.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/deep-oceanic-navy.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/dracula-official-high-contrast.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/dracula-official.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/kimi-dark-modern-high-contrast.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/kimi-dark-modern-muted.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/kimi-dark-modern-soft.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/kimi-dark-modern.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/nord-light-arctic.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-champagne.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-cosmic-latte.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-extra-warm.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-golden-parchment.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-golden-sand.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-lavender-blush.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-light-gold.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/solarized-light-muted-canvas.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/space-kde-slate-high-contrast.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/space-kde-slate-soft-high-contrast.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/space-kde-slate.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/sweet-neon-synthwave-high-contrast-red.xml"
+        },
+        {
+          "type": "file",
+          "path": "themes/sweet-neon-synthwave.xml"
+        }
+      ]
+    },
+    {
+      "name": "libeditorconfig",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DBUILD_DOCUMENTATION=OFF",
+        "-DINSTALL_HTML_DOC=OFF"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/editorconfig/editorconfig-core-c.git",
+          "tag": "v0.12.5",
+          "commit": "f6b0ca395149b5a2fbd56a488cae30306a58170f",
+          "x-checker-data": {
+            "type": "git",
+            "tag-pattern": "^v([\\d.]+)$",
+            "versions": {
+              "==": "0.12.5"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "libspelling",
+      "buildsystem": "meson",
+      "config-opts": [
+        "-Dintrospection=disabled",
+        "-Ddocs=false"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/libspelling/0.4/libspelling-0.4.10.tar.xz",
+          "sha256": "56e3f01a3a18b575beea4c34349f99cdaba316e1f7c271b1231f7bcf5d9af73b",
+          "x-checker-data": {
+            "type": "gnome",
+            "name": "libspelling"
+          }
+        }
+      ]
+    },
+    {
+      "name": "gnome-text-editor",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/gnome-text-editor/50/gnome-text-editor-50.1.tar.xz",
+          "sha256": "f68036b09d378faa883bfe936e479c6ff37027c2ffed101daf912df70c51d0e6",
+          "x-checker-data": {
+            "type": "gnome",
+            "name": "gnome-text-editor"
+          }
+        }
+      ]
+    }
+  ]
+}
