@@ -36,9 +36,14 @@ def update_manifest(filename, app_id, branch_name):
     data['finish-args'].append(f"--env=GTK_SOURCE_STYLE_SCHEME={DEFAULT_THEME_ID}")
 
     # 2. Create Custom Style Module
-    #    Sources reference themes/ (relative to the repo root, where
-    #    flatpak-builder looks). Build commands install each file into
-    #    the app's gtksourceview styles directory.
+    #
+    # Sources reference themes/ (relative to the manifest, where
+    # flatpak-builder fetches them from).
+    #
+    # Build commands reference the *basename* only. flatpak-builder
+    # stages each source into the build directory using its basename,
+    # so inside the build dir the file is `foo.xml`, not
+    # `themes/foo.xml`.
     new_module = {
         "name": "custom-gtksource-styles",
         "buildsystem": "simple",
@@ -49,7 +54,7 @@ def update_manifest(filename, app_id, branch_name):
     for theme in THEME_FILES:
         basename = os.path.basename(theme)
         new_module["build-commands"].append(
-            f"install -Dm644 {theme} /app/share/gtksourceview-5/styles/{basename}"
+            f"install -Dm644 {basename} /app/share/gtksourceview-5/styles/{basename}"
         )
 
     modules = [m for m in data.get('modules', []) if m['name'] != "custom-gtksource-styles"]
@@ -61,13 +66,11 @@ def update_manifest(filename, app_id, branch_name):
     new_data["app-id"] = app_id
 
     for key, value in data.items():
-        # Skip keys we want to position/remove manually
         if key in ["app-id", "branch", "name", "id"]:
             continue
 
         new_data[key] = value
 
-        # When we hit 'command', inject 'branch' immediately after
         if key == "command":
             new_data["branch"] = branch_name
 
