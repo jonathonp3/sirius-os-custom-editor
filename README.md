@@ -85,7 +85,7 @@ Stable Version (v50)
 
 1. Install SDK:
 ```bash
-flatpak install --user -y flathub org.gnome.Sdk//50 org.gnome.Platform//50
+flatpak install --user -y flathub org.gnome.Sdk//51 org.gnome.Platform//51
 ```
 2. Build:
 ```bash

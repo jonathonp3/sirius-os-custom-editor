@@ -21,7 +21,7 @@ jobs:
     - name: Flatpak Build Environment
       uses: addnab/docker-run-action@v3
       with:
-        image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-47
+        image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-51
         options: -v ${{ github.workspace }}:/workspace --privileged   
         run: |
           cd /workspace
@@ -31,7 +31,7 @@ jobs:
 
           # 2. Setup Runtimes
           flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-          flatpak install --user -y flathub org.gnome.Sdk//50 org.gnome.Platform//50
+          flatpak install --user -y flathub org.gnome.Sdk//51 org.gnome.Platform//51
           
           # 3. Inject Themes
           python3 update_manifest.py
